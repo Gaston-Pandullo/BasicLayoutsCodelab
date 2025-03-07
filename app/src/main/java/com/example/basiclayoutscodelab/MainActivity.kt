@@ -8,10 +8,12 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -36,6 +38,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -71,7 +75,9 @@ fun SearchBar(
     TextField(
         value = "",
         onValueChange = {},
-        modifier = modifier.fillMaxWidth().heightIn(min = 56.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = 56.dp),
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
@@ -102,7 +108,9 @@ fun AlignYourBodyElement(
          painter = painterResource(image),
          contentDescription = null,
          contentScale = ContentScale.Crop,
-         modifier = Modifier.size(88.dp).clip(CircleShape)
+         modifier = Modifier
+             .size(88.dp)
+             .clip(CircleShape)
      )
         Text(
             text = stringResource(text),
@@ -202,7 +210,9 @@ fun HomeSection(
         Text(
             text = stringResource(title),
             style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.paddingFromBaseline(40.dp,16.dp).padding(horizontal = 16.dp)
+            modifier = Modifier
+                .paddingFromBaseline(40.dp, 16.dp)
+                .padding(horizontal = 16.dp)
         )
         content()
     }
@@ -266,7 +276,71 @@ fun MySootheAppPortrait(){
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+fun AppNavegationRail(modifier: Modifier = Modifier){
+    NavigationRail(
+        modifier.padding(start = 8.dp, end = 8.dp),
+        containerColor = MaterialTheme.colorScheme.background
+    ) {
+        Column(
+            modifier = Modifier.fillMaxHeight(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            NavigationRailItem(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.AccountCircle,
+                        contentDescription = null
+                    )
+                },
+                label = {
+                    Text(
+                        text = stringResource(R.string.bottom_navigation_home)
+                    )
+                },
+                selected = true,
+                onClick = {}
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            NavigationRailItem(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.AccountCircle,
+                        contentDescription = null
+                    )
+                },
+                label = {
+                    Text(
+                        text = stringResource(R.string.bottom_navigation_profile)
+                    )
+                },
+                selected = false,
+                onClick = {}
+            )
+        }
+    }
+}
+
+@Composable
+fun MySootheAppLandscape(){
+    BasicLayoutsCodelabTheme {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            Row {
+                AppNavegationRail()
+                HomeScreen()
+            }
+        }
+    }
+}
+
+@Preview(widthDp = 640, heightDp = 360)
+@Composable
+fun MySootheAppLandscapePreview(){
+    MySootheAppLandscape()
+}
+
+@Preview(widthDp = 360, heightDp = 640)
 @Composable
 fun MySootheAppPortraitPreview(){
     MySootheAppPortrait()
@@ -276,6 +350,12 @@ fun MySootheAppPortraitPreview(){
 @Composable
 fun BottomNavigationPreview(){
     BasicLayoutsCodelabTheme { BottomNavigation() }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+fun AppNavegationRailPreview(){
+    BasicLayoutsCodelabTheme { AppNavegationRail() }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
